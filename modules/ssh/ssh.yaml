@@ -1,0 +1,8 @@
+---
+metadata:
+  name: ssh
+  description: |
+    insert your public key into the image, allowing root access via ssh
+containerfile: Containerfile
+buildargs:
+  - SSHPUBKEY
