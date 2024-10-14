@@ -1,4 +1,5 @@
 import logging
+from fab.fab import Fab
 
 class FabCli():
     """
@@ -14,12 +15,18 @@ class FabCli():
             'warn': logging.WARN,
             'debug': logging.DEBUG
         }
-        final_config = {**self._cmdargs(), **kwargs}
-        for k in final_config:
-            setattr(self, k, final_config[k])
+        config = {**self._cmdargs(), **kwargs}
+        for k in config:
+            setattr(self, k, config[k])
         self._basic_logging()
         self.loglevel = self.log_level
         self.set_loglevel(self.loglevel)
+
+        if config['command'] == 'build':
+            self.fab = Fab(config['fabfile'],
+                           container_tool=config['container_tool'],
+                           tool_args=config['container_tool_extra_args'])
+            self.fab.build()
 
     def _basic_logging(self):
         logging.basicConfig(level=self.logmap[self.loglevel],
@@ -65,9 +72,20 @@ class FabCli():
                             type=str,
                             default=self.log_datefmt,
                             help='Python Logger() compatible date format str')
+        parser.add_argument('--container-tool',
+                                  help='What container tool to use',
+                                  default='/usr/bin/podman')
+        parser.add_argument('--container-tool-extra-args',
+                                  help='container tool extra arguments',
+                                  default=[])
 
         subparsers = parser.add_subparsers(dest='command')
         subparsers.required = False
+        parser_build = subparsers.add_parser('build',
+                                             help='Build bootc container')
+        parser_build.add_argument('--fabfile',
+                                  help='path to fabfile',
+                                  default='Fabfile')
 
         try:
             import argcomplete
