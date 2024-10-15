@@ -1,7 +1,7 @@
 Fast Assembler for Bootc
 ===
 
-`fab` is a somewhat opinionated build pipeline for [booc](https://github.com/containers/bootc), allowing the modularization
+`fab` is a somewhat opinionated build pipeline for [bootc](https://github.com/containers/bootc), allowing the modularization
 of Containerfiles/bootc image building.
 
 Fabfiles and module definitions
