@@ -1,0 +1,11 @@
+---
+metadata:
+  name: fabrules
+  description: My first bootc
+from: quay.io/centos-bootc/centos-bootc:stream9
+include:
+  - modules/ssh/ssh.yaml
+  - modules/dnf/install.yaml
+buildargs:
+  - SSHPUBKEY: insert_ssh_pub_key_here
+  - RPMS: tmux cloud-init
