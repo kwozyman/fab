@@ -109,6 +109,7 @@ class Fab:
                     podman_args.append('--build-arg')
                     podman_args.append('{}={}'.format(key, arg[key]))
             logging.debug('podman command: {}'.format(podman_args))
+            logging.info('Start build of {} stage'.format(tag))
             self._run(self.container_tool, podman_args, module.working_dir)
             previous_container_image = tag
         podman_args = []
