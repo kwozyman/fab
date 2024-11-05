@@ -68,7 +68,7 @@ class FabModule():
         if 'buildargs' in self.definition:
             if not type(self.definition['buildargs']) == type(list()):
                 logging.error("'buildargs' is not a list")
-                is_vaild = False
+                is_valid = False
         else:
             self.definition['buildargs'] = []
 
