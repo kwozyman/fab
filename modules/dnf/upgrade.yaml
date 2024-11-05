@@ -1,0 +1,7 @@
+---
+metadata:
+  name: dnf-upgrade
+  description: |
+    Upgrade all dnf packages
+containerfile: upgrade.Containerfile
+
