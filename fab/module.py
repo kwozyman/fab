@@ -60,13 +60,13 @@ class FabModule():
         if not 'containerfile' in self.definition:
             logging.debug("'containerfile' missing from definition yaml for module {}, using default".format(self.name))
             self.definition['containerfile'] = 'Containerfile'
-        elif not type(self.definition['containerfile']) == str:
+        elif not isinstance(self.definition['containerfile'], str):
             logging.error("'containerfile' is not a string")
             is_valid = False
         self.containerfile = self.definition['containerfile']
 
         if 'buildargs' in self.definition:
-            if not type(self.definition['buildargs']) == type(list()):
+            if not isinstance(self.definition['buildargs'],list):
                 logging.error("'buildargs' is not a list")
                 is_valid = False
         else:
