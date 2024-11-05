@@ -1,15 +1,13 @@
-Fast Assembler for Bootc
-===
+# Fast Assembler for Bootc
 
 `fab` is a somewhat opinionated build pipeline for [bootc](https://github.com/containers/bootc), allowing the modularization
 of Containerfiles/bootc image building.
 
-Fabfiles and module definitions
----
+## Fabfiles and module definitions
 
-`fab` is structured as a main descriptive file for the final image, currently called "Fabfile". A Fabfile example looks like this:
+`fab` is structured as a main descriptive file for the final image, currently called "`Fabfile`". A `Fabfile` example looks like this:
 
-```
+```yaml
 ---
 metadata:
   name: fabrules
@@ -25,14 +23,14 @@ buildargs:
 
 The fields are somewhat self-explanatory:
 
-  - `metadata`: just metadata about the bootc image
-  - `from`: base image (i.e. the first `FROM` in the pipeline)
-  - `include`: list of modules to include, in order in the bootc image
-  - `buildargs`: list of buildargs (variables) used in the build process
+- `metadata`: just metadata about the bootc image
+- `from`: base image (i.e. the first `FROM` in the pipeline)
+- `include`: list of modules to include, in order in the bootc image
+- `buildargs`: list of buildargs (variables) used in the build process
 
 For each module, there is a short descriptive file with the module definition (see `modules/` directory for examples):
 
-```
+```yaml
 ---
 metadata:
   name: dnf-install
@@ -45,27 +43,25 @@ buildargs:
 
 Like with the top level definition, the fields should be easy to understand:
 
-  - `metadata`: module level metadata
-  - `containerfile`: filename for the Containerfile to use
-  - `buildargs`: simple list of expected buildargs (without values!)
+- `metadata`: module level metadata
+- `containerfile`: filename for the `Containerfile` to use
+- `buildargs`: simple list of expected buildargs (without values!)
 
-Installation
----
+## Installation
 
-```
+```sh
 $ git clone git@github.com:kwozyman/fab.git
 $ cd fab
 $ python3 -m pip install --requirement requirements.txt
 ```
 
-Usage
----
+## Usage
 
 A simple `python3 -m fab --help` will show the full command line arguments.
 
 In order to build the container from `Fabfile.example`:
 
-```
+```sh
 $ python3 -m fab build --fabfile Fabfile.example
 ```
 

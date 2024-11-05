@@ -4,4 +4,3 @@ metadata:
   description: |
     Enable cloud-init
 containerfile: enable.Containerfile
-
