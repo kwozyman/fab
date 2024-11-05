@@ -51,7 +51,7 @@ class Fab:
             self.definition['include'] = []
 
         if 'buildargs' in self.definition:
-            if not type(self.definition['buildargs']) == type(list()):
+            if not isinstance(self.definition['buildargs'],list):
                 logging.error("'buildargs' is not a list")
                 is_vaild = False
         else:
@@ -61,10 +61,10 @@ class Fab:
 
     def _load_includes(self):
         for include in self.definition['include']:
-            if type(include) == str:
+            if isinstance(include,str):
                 _include = include
                 _var_values = {}
-            elif type(include) == dict:
+            elif isinstance(include, dict):
                 _include = include['include']
                 if 'buildargs' in include.keys():
                     for item in include['buildargs']:
