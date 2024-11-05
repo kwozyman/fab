@@ -1,0 +1,16 @@
+---
+# Add 'repo' label to any root file changes
+repo:
+  - ./*
+
+documentation:
+  - doc/**/*
+
+modules:
+  - modules/*
+
+fab:
+  - fab/*
+
+ci:
+  - tests/**/*
