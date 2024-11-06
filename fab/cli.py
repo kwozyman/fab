@@ -1,10 +1,12 @@
 import logging
 from fab.fab import Fab
 
+
 class FabCli():
     """
     Fab command line
     """
+
     def __init__(self, **kwargs):
         self.loglevel = 'info'
         self.log_format = '%(asctime)19s - %(levelname)8s - %(message)s'
@@ -56,7 +58,7 @@ class FabCli():
             import argparse
             parser = argparse.ArgumentParser(
                 description=description
-                )
+            )
 
         parser.add_argument('--log-level', '--loglevel',
                             choices=self.logmap.keys(),
@@ -73,11 +75,11 @@ class FabCli():
                             default=self.log_datefmt,
                             help='Python Logger() compatible date format str')
         parser.add_argument('--container-tool',
-                                  help='What container tool to use',
-                                  default='/usr/bin/podman')
+                            help='What container tool to use',
+                            default='/usr/bin/podman')
         parser.add_argument('--container-tool-extra-args',
-                                  help='container tool extra arguments',
-                                  default=[])
+                            help='container tool extra arguments',
+                            default=[])
 
         subparsers = parser.add_subparsers(dest='command')
         subparsers.required = False
