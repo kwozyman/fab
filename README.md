@@ -70,3 +70,10 @@ $ python3 -m fab build --fabfile Fabfile.example
 ```
 
 The above will trigger container image builds in sequence for each of the modules and the final one at the end.
+
+
+Debugging messages can be enabled in fab with the `--log-level debug` switch, and in the underlying podman call with the `--container-tool-extra-args` switch:
+
+```
+$ python3 -m fab --container-tool-extra-args="--log-level debug" --log-level debug  build --fabfile Fabfile.example
+```

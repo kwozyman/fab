@@ -79,7 +79,7 @@ class FabCli():
                             default='/usr/bin/podman')
         parser.add_argument('--container-tool-extra-args',
                             help='container tool extra arguments',
-                            default=[])
+                            default="")
 
         subparsers = parser.add_subparsers(dest='command')
         subparsers.required = False
