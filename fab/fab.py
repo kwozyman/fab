@@ -9,7 +9,7 @@ class Fab:
     Fabfile definition
     """
 
-    def __init__(self, source, container_tool='/usr/bin/podman', tool_args=[]):
+    def __init__(self, source, container_tool='/usr/bin/podman', tool_args=""):
         self.source = source
         self.name = source
         self.container_tool = container_tool
@@ -97,8 +97,7 @@ class Fab:
             tag = '{}-stage-{}'.format(
                 self.name,
                 module.name)
-            podman_args = []
-            podman_args.append(self.tool_args)
+            podman_args = self.tool_args.split()
             podman_args.append('build')
             podman_args.append('--from')
             podman_args.append(previous_container_image)
@@ -114,8 +113,7 @@ class Fab:
             logging.info('Start build of {} stage'.format(tag))
             self._run(self.container_tool, podman_args, module.working_dir)
             previous_container_image = tag
-        podman_args = []
-        podman_args.append(self.tool_args)
+        podman_args = self.tool_args.split()
         podman_args.append('tag')
         podman_args.append(previous_container_image)
         podman_args.append(self.name)
