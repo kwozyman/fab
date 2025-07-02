@@ -32,7 +32,7 @@ setup(
     ],
     python_requires=">=3.8",
     install_requires=[
-        # Add your dependencies here
+        "pykickstart>=3.0",
     ],
     extras_require={
         "dev": [

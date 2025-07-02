@@ -1,6 +1,6 @@
 # Core dependencies
-# Add your project dependencies here
-
+pykickstart>=3.0
+ 
 # Development dependencies
 pytest>=6.0
 black>=22.0

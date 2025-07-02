@@ -37,6 +37,12 @@ Show version:
 fab version
 ```
 
+Execute Kickstart file:
+```bash
+fab kickstart file.ks
+fab kickstart file.ks --dry-run
+```
+
 ### Examples
 
 ```bash
@@ -45,6 +51,12 @@ fab --help
 
 # Show version
 fab version
+
+# Execute a Kickstart file
+fab kickstart sample.ks
+
+# Validate a Kickstart file without executing
+fab kickstart sample.ks --dry-run
 ```
 
 ## Development
