@@ -44,7 +44,7 @@ setup(
     },
     entry_points={
         "console_scripts": [
-            "fab=fab:main",
+            "fab=fab.cli:main",
         ],
     },
 ) 

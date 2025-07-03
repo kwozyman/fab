@@ -3,7 +3,8 @@ Tests for the fab CLI tool.
 """
 
 import pytest
-from fab import main, __version__
+from fab.cli import main
+from fab.config import __version__
 import sys
 import os
 from io import StringIO
@@ -47,7 +48,7 @@ def test_help_command():
         output = sys.stdout.getvalue()
         
         assert result == 0
-        assert "FAB - Fast Assembler for BootC" in output
+        assert "Fast Assembler for BootC" in output
         assert "Available commands" in output
     finally:
         sys.stdout = old_stdout

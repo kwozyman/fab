@@ -92,11 +92,17 @@ mypy .
 
 ```
 fab/
-├── fab.py          # Main CLI entry point
-├── setup.py        # Package configuration
-├── README.md       # This file
-├── requirements.txt # Dependencies (optional)
-└── tests/          # Test files (optional)
+├── fab/                    # Main package
+│   ├── __init__.py        # Package initialization
+│   ├── cli.py             # Command-line interface
+│   ├── config.py          # Configuration and version
+│   ├── os_detection.py    # OS detection and handler selection
+│   └── kickstart.py       # Kickstart processing
+├── fab.py                 # Entry point script
+├── setup.py               # Package configuration
+├── README.md              # This file
+├── requirements.txt       # Dependencies
+└── tests/                 # Test files
 ```
 
 ## Contributing
