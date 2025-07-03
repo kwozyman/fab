@@ -19,7 +19,7 @@ def handle_kickstart(file_path: str, dry_run: bool = False) -> int:
     try:
         # Import pykickstart here to avoid import errors if not installed
         from pykickstart.parser import KickstartParser
-        from pykickstart.handlers.f40 import F40Handler
+        from pykickstart.handlers.f40 import F40Handler as Handler
         from pykickstart.errors import KickstartError
         
         # Check if file exists
@@ -28,7 +28,7 @@ def handle_kickstart(file_path: str, dry_run: bool = False) -> int:
             return 1
         
         # Parse the kickstart file
-        handler = F40Handler()
+        handler = Handler()
         parser = KickstartParser(handler)
         with open(file_path, 'r') as f:
             content = f.read()
