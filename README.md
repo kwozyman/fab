@@ -17,6 +17,11 @@ cd fab
 pip install -e .
 ```
 
+Or use the Makefile:
+```bash
+make install
+```
+
 ### Using pip (when published)
 
 ```bash
@@ -41,6 +46,7 @@ Execute Kickstart file:
 ```bash
 fab kickstart file.ks
 fab kickstart file.ks --dry-run
+fab kickstart file.ks --ignore-unknown
 ```
 
 ### Examples
@@ -53,10 +59,13 @@ fab --help
 fab version
 
 # Execute a Kickstart file
-fab kickstart sample.ks
+fab kickstart samples/sample.ks
 
 # Validate a Kickstart file without executing
-fab kickstart sample.ks --dry-run
+fab kickstart samples/sample.ks --dry-run
+
+# Continue execution even with unknown commands (warnings only)
+fab kickstart samples/sample.ks --ignore-unknown
 ```
 
 ## Development
@@ -71,6 +80,11 @@ pip install -e ".[dev]"
 2. Run tests:
 ```bash
 pytest
+```
+
+Or use the Makefile:
+```bash
+make test
 ```
 
 3. Format code:
@@ -88,6 +102,17 @@ flake8
 mypy .
 ```
 
+### Makefile Targets
+
+The project includes a Makefile for common tasks:
+
+```bash
+make help        # Show available targets
+make test        # Run the test suite
+make install     # Install fab for the local user
+make uninstall   # Uninstall fab-cli package
+```
+
 ### Project Structure
 
 ```
@@ -97,9 +122,16 @@ fab/
 │   ├── cli.py             # Command-line interface
 │   ├── config.py          # Configuration and version
 │   ├── os_detection.py    # OS detection and handler selection
-│   └── kickstart.py       # Kickstart processing
+│   ├── kickstart.py       # Kickstart processing
+│   └── whitelist.py       # Command validation
+├── samples/                # Sample Kickstart files
+│   ├── sample.ks          # Basic sample
+│   ├── test_forbidden.ks  # Test file with forbidden commands
+│   ├── test_ignored.ks    # Test file with ignored commands
+│   └── test_script.ks     # Test file with script sections
 ├── fab.py                 # Entry point script
 ├── setup.py               # Package configuration
+├── Makefile               # Build and development tasks
 ├── README.md              # This file
 ├── requirements.txt       # Dependencies
 └── tests/                 # Test files
