@@ -11,7 +11,6 @@ VALID_COMMANDS = {
     'rootpw': 'Root password',
     
     # Network configuration
-    'network': 'Network configuration',
     'firewall': 'Firewall settings',
     
     # Package management
@@ -27,35 +26,14 @@ VALID_COMMANDS = {
     
     # Miscellaneous
     'firstboot': 'First boot configuration',
-    'logging': 'Logging configuration',
-    'updates': 'Update configuration',
-    'autostep': 'Automatic step',
     
     # SSH configuration
     'sshpw': 'SSH password',
     'sshkey': 'SSH key',
     
     # Additional valid commands for containers
-    'authconfig': 'Authentication configuration (legacy)',
-    'authselect': 'Authentication selection',
-    'btrfs': 'Btrfs filesystem configuration',
-    'device': 'Device configuration',
-    'deviceprobe': 'Device probe configuration',
-    'hmc': 'Hardware Management Console',
-    'method': 'Installation method',
-    'mount': 'Mount configuration',
-    'nvdimm': 'NVDIMM configuration',
-    'ostreecontainer': 'OSTree container configuration',
-    'partition': 'Partition configuration',
-    'raid': 'RAID configuration',
-    'realm': 'Realm configuration',
-    'reqpart': 'Required partition',
-    'rescue': 'Rescue mode',
-    'snapshot': 'Snapshot configuration',
     'timesource': 'Time source configuration',
-    'zerombr': 'Zero MBR configuration',
-    'zipl': 'ZIPL boot loader',
-    
+ 
     # Section markers (valid kickstart syntax)
     '%packages': 'Package selection section',
     '%end': 'Section end marker',
@@ -121,8 +99,6 @@ def get_valid_commands() -> dict[str, str]:
     """Get the current whitelist of valid commands."""
     return VALID_COMMANDS.copy()
 
-
-
 def add_valid_command(command: str, description: str = "") -> None:
     """Add a command to the whitelist."""
     VALID_COMMANDS[command.lower()] = description
@@ -132,5 +108,3 @@ def remove_valid_command(command: str) -> None:
     command = command.lower()
     if command in VALID_COMMANDS:
         del VALID_COMMANDS[command]
-
- 

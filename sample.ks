@@ -7,9 +7,6 @@ lang en_US.UTF-8
 # Keyboard layout
 keyboard us
 
-# Network configuration
-network --bootproto=dhcp
-
 # Root password
 rootpw --iscrypted $6$rounds=656000$salt$hash
 
