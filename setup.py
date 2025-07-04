@@ -47,4 +47,4 @@ setup(
             "fab=fab.cli:main",
         ],
     },
-) 
+)

@@ -10,4 +10,4 @@ __version__ = "0.1.0"
 # Import main function for easy access
 from .cli import main
 
-__all__ = ['main', '__version__'] 
+__all__ = ["main", "__version__"]
