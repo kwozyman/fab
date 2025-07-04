@@ -5,4 +5,5 @@ pykickstart>=3.0
 pytest>=6.0
 black>=22.0
 flake8>=4.0
-mypy>=0.950 
+mypy>=0.950
+autopep8>=1.6.0 

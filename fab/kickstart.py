@@ -82,13 +82,15 @@ def handle_kickstart(
             print("  Keyboard: Not specified")
 
         try:
-            network_count = len(parser.handler.network.network) if hasattr(parser.handler.network, "network") else 0  # type: ignore[attr-defined]
+            network_count = len(parser.handler.network.network) if hasattr(
+                parser.handler.network, "network") else 0  # type: ignore[attr-defined]
             print(f"  Network: {network_count} network(s) configured")
         except AttributeError:
             print("  Network: Not specified")
 
         try:
-            package_count = len(parser.handler.packages.packageList) if hasattr(parser.handler.packages, "packageList") else 0  # type: ignore[attr-defined]
+            package_count = len(parser.handler.packages.packageList) if hasattr(
+                parser.handler.packages, "packageList") else 0  # type: ignore[attr-defined]
             print(f"  Packages: {package_count} packages selected")
         except AttributeError:
             print("  Packages: Not specified")

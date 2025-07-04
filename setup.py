@@ -40,6 +40,7 @@ setup(
             "black>=22.0",
             "flake8>=4.0",
             "mypy>=0.950",
+            "autopep8>=1.6.0",
         ],
     },
     entry_points={
