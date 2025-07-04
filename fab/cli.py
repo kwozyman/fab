@@ -57,6 +57,11 @@ Examples:
         action='store_true',
         help='Parse and validate the Kickstart file without executing'
     )
+    kickstart_parser.add_argument(
+        '--ignore-unknown',
+        action='store_true',
+        help='Continue execution even if unknown commands are present (print warnings only)'
+    )
     
     # Whitelist command
     whitelist_parser = subparsers.add_parser(
@@ -79,7 +84,7 @@ Examples:
         return 0
     
     elif args.command == 'kickstart':
-        return handle_kickstart(args.file, args.dry_run)
+        return handle_kickstart(args.file, args.dry_run, args.ignore_unknown)
     
     elif args.command == 'whitelist':
         if args.list:

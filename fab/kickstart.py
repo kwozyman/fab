@@ -7,8 +7,15 @@ from .os_detection import detect_os_handler
 from .whitelist import validate_kickstart_commands
 
 
-def handle_kickstart(file_path: str, dry_run: bool = False) -> int:
-    """Handle kickstart command execution."""
+def handle_kickstart(file_path: str, dry_run: bool = False, ignore_unknown: bool = False) -> int:
+    """Handle kickstart command execution.
+    Args:
+        file_path: Path to the Kickstart file
+        dry_run: If True, only validate, do not execute
+        ignore_unknown: If True, continue even if unknown commands are present
+    Returns:
+        int: Exit code (0 for success, 1 for error)
+    """
     try:
         # Import pykickstart here to avoid import errors if not installed
         from pykickstart.parser import KickstartParser
@@ -48,7 +55,8 @@ def handle_kickstart(file_path: str, dry_run: bool = False) -> int:
             print("Warning: Kickstart file contains unknown commands:")
             for violation in violations:
                 print(f"  {violation}")
-            return 1
+            if not ignore_unknown:
+                return 1
         
         if dry_run:
             print("Dry run mode: Kickstart file is valid and ready for execution.")
@@ -60,25 +68,25 @@ def handle_kickstart(file_path: str, dry_run: bool = False) -> int:
         
         # Safely access handler attributes
         try:
-            lang = getattr(parser.handler.lang, 'lang', 'Not specified')
+            lang = getattr(parser.handler.lang, 'lang', 'Not specified')  # type: ignore[attr-defined]
             print(f"  Language: {lang}")
         except AttributeError:
             print("  Language: Not specified")
         
         try:
-            keyboard = getattr(parser.handler.keyboard, 'keyboard', 'Not specified')
+            keyboard = getattr(parser.handler.keyboard, 'keyboard', 'Not specified')  # type: ignore[attr-defined]
             print(f"  Keyboard: {keyboard}")
         except AttributeError:
             print("  Keyboard: Not specified")
         
         try:
-            network_count = len(parser.handler.network.network) if hasattr(parser.handler.network, 'network') else 0
+            network_count = len(parser.handler.network.network) if hasattr(parser.handler.network, 'network') else 0  # type: ignore[attr-defined]
             print(f"  Network: {network_count} network(s) configured")
         except AttributeError:
             print("  Network: Not specified")
         
         try:
-            package_count = len(parser.handler.packages.packageList) if hasattr(parser.handler.packages, 'packageList') else 0
+            package_count = len(parser.handler.packages.packageList) if hasattr(parser.handler.packages, 'packageList') else 0  # type: ignore[attr-defined]
             print(f"  Packages: {package_count} packages selected")
         except AttributeError:
             print("  Packages: Not specified")
