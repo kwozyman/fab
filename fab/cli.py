@@ -7,6 +7,7 @@ import argparse
 import sys
 from .config import __version__, APP_DESCRIPTION
 from .kickstart import handle_kickstart
+from .whitelist import get_valid_commands
 
 
 def main() -> int:
@@ -20,6 +21,8 @@ Examples:
   fab version                   Show version information
   fab kickstart file.ks         Execute a Kickstart file
   fab kickstart file.ks --dry-run  Validate a Kickstart file
+  fab whitelist --list          List valid commands
+
         """
     )
     
@@ -55,6 +58,16 @@ Examples:
         help='Parse and validate the Kickstart file without executing'
     )
     
+    # Whitelist command
+    whitelist_parser = subparsers.add_parser(
+        'whitelist',
+        help='Manage kickstart command whitelist'
+    )
+    whitelist_parser.add_argument(
+        '--list',
+        action='store_true',
+        help='List all valid commands'
+    )
     args = parser.parse_args()
     
     if not args.command:
@@ -67,6 +80,17 @@ Examples:
     
     elif args.command == 'kickstart':
         return handle_kickstart(args.file, args.dry_run)
+    
+    elif args.command == 'whitelist':
+        if args.list:
+            valid = get_valid_commands()
+            print("Valid kickstart commands:")
+            for cmd, desc in sorted(valid.items()):
+                print(f"  {cmd:<20} - {desc}")
+            return 0
+        else:
+            print("Use --list to see valid commands")
+            return 0
     
     return 0
 

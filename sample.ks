@@ -16,12 +16,6 @@ rootpw --iscrypted $6$rounds=656000$salt$hash
 # System timezone
 timezone UTC
 
-# Boot loader
-bootloader --location=mbr
-
-# Partitioning
-autopart
-
 # Package selection
 %packages
 @core
