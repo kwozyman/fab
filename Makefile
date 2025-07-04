@@ -30,7 +30,7 @@ uninstall:
 
 # Check code for PEP8 compliance
 lint:
-	flake8 --max-line-length=$(MAX_LINE_LENGTH) .
+	flake8 --max-line-length=$(MAX_LINE_LENGTH) --exclude=build .
 
 # Automatically fix PEP8 compliance issues
 pep8-fix:

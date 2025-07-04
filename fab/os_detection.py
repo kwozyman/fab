@@ -4,7 +4,6 @@ OS detection and handler selection for pykickstart.
 
 import os
 import platform
-from typing import Type
 
 
 def detect_os_handler():

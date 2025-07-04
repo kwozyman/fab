@@ -49,7 +49,6 @@ def validate_kickstart_commands(content: str) -> tuple[bool, list[str]]:
     lines = content.split("\n")
 
     in_script_section = False
-    current_section = None
 
     for line_num, line in enumerate(lines, 1):
         line = line.strip()
@@ -63,10 +62,8 @@ def validate_kickstart_commands(content: str) -> tuple[bool, list[str]]:
             if line in ["%packages", "%pre", "%post", "%traceback", "%end"]:
                 if line == "%end":
                     in_script_section = False
-                    current_section = None
                 else:
                     in_script_section = True
-                    current_section = line
                 continue
 
         # Skip lines within script sections (let pykickstart handle validation)
