@@ -18,7 +18,7 @@ help:
 
 # Run tests using pytest
 test:
-	pytest
+	pytest --verbosity=2
 
 # Install fab for the local user
 install:
