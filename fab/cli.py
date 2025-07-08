@@ -18,6 +18,7 @@ def main() -> int:
 Examples:
   fab --help                    Show this help message
   fab version                   Show version information
+  fab version --show-commands   Show version and valid commands
   fab kickstart file.ks         Execute a Kickstart file
   fab kickstart file.ks --dry-run  Validate a Kickstart file
 
@@ -29,7 +30,12 @@ Examples:
     subparsers = parser.add_subparsers(dest="command", help="Available commands")
 
     # Version command
-    subparsers.add_parser("version", help="Show version information")
+    version_parser = subparsers.add_parser("version", help="Show version information")
+    version_parser.add_argument(
+        "--show-commands",
+        action="store_true",
+        help="Also display the list of valid kickstart commands"
+    )
 
     # Kickstart command
     kickstart_parser = subparsers.add_parser(
@@ -57,6 +63,12 @@ Examples:
 
     if args.command == "version":
         print(f"fab version {__version__}")
+        if hasattr(args, 'show_commands') and args.show_commands:
+            from .whitelist import get_valid_commands
+            valid_commands = get_valid_commands()
+            print(f"\nValid kickstart commands ({len(valid_commands)}):")
+            for command, description in sorted(valid_commands.items()):
+                print(f"  {command:<15} - {description}")
         return 0
 
     elif args.command == "kickstart":

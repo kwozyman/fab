@@ -40,6 +40,7 @@ fab --help
 Show version:
 ```bash
 fab version
+fab version --show-commands  # Also show valid kickstart commands
 ```
 
 Execute Kickstart file:
@@ -57,6 +58,7 @@ fab --help
 
 # Show version
 fab version
+fab version --show-commands  # Also show valid kickstart commands
 
 # Execute a Kickstart file
 fab kickstart samples/sample.ks

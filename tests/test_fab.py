@@ -30,6 +30,29 @@ def test_version_command():
         sys.stdout = old_stdout
 
 
+def test_version_command_with_show_commands():
+    """Test the version command with --show-commands option."""
+    # Redirect stdout to capture output
+    old_stdout = sys.stdout
+    sys.stdout = StringIO()
+
+    try:
+        # Mock sys.argv for version command with show-commands
+        sys.argv = ["fab", "version", "--show-commands"]
+        result = main()
+
+        # Get captured output
+        output = sys.stdout.getvalue().strip()
+
+        assert result == 0
+        assert f"fab version {__version__}" in output
+        assert "Valid kickstart commands" in output
+        assert "lang" in output  # Should show at least one valid command
+        assert "keyboard" in output  # Should show at least one valid command
+    finally:
+        sys.stdout = old_stdout
+
+
 def test_help_command():
     """Test that help is displayed when no command is given."""
     # Redirect stdout to capture output
