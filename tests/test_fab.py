@@ -47,8 +47,8 @@ def test_version_command_with_show_commands():
         assert result == 0
         assert f"fab version {__version__}" in output
         assert "Valid kickstart commands" in output
-        assert "lang" in output  # Should show at least one valid command
-        assert "keyboard" in output  # Should show at least one valid command
+        assert "%end" in output  # Should show at least one valid command
+        assert "%packages" in output  # Should show at least one valid command
     finally:
         sys.stdout = old_stdout
 
@@ -96,10 +96,11 @@ def test_kickstart_command_file_not_found():
 
 def test_kickstart_command_dry_run():
     """Test the kickstart command with dry-run option."""
-    # Create a temporary kickstart file
+    # Create a temporary kickstart file with valid commands
     test_ks_content = """# Test kickstart file
-lang en_US.UTF-8
-keyboard us
+group --name=testgroup
+%packages
+%end
 """
 
     test_file = "test_sample.ks"
