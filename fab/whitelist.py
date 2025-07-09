@@ -8,21 +8,21 @@ VALID_COMMANDS = {
     #"lang": "System language setting",
     #"keyboard": "Keyboard layout",
     #"timezone": "System timezone",
-    "rootpw": "Root password",
+    #"rootpw": "Root password",
     # Network configuration
     #"firewall": "Firewall settings",
     # Package management
     #"repo": "Repository configuration",
     # User management
-    "user": "User creation",
+    #"user": "User creation",
     "group": "Group creation",
     # System services
     #"services": "Service configuration",
-    "selinux": "SELinux configuration",
+    #"selinux": "SELinux configuration",
     # Miscellaneous
     #"firstboot": "First boot configuration",
     # SSH configuration
-    "sshkey": "SSH key",
+    #"sshkey": "SSH key",
     # Additional valid commands for containers
     #"timesource": "Time source configuration",
     # Section markers (valid kickstart syntax)
