@@ -3,9 +3,11 @@
 # Configurable settings
 MAX_LINE_LENGTH ?= 120
 INSTALL_USER ?= --user
-CONTAINER_NAME ?= fab-cli
+CONTAINER_REPO ?= quay.io/kwozyman/fab
+CONTAINER_TAG ?= latest
 CONTAINER_TOOL ?= podman
 FROM ?= registry.fedoraproject.org/fedora-bootc:latest
+PIP ?= pip
 
 .PHONY: help test install uninstall lint pep8-fix
 
@@ -29,19 +31,23 @@ test:
 # Install fab for the local user
 install:
 	python -c "import importlib.util; import sys; sys.exit(0 if importlib.util.find_spec('pyanaconda') else 1)" || echo "Error: pyanaconda is not installed"
-	pip install $(INSTALL_USER) .
+	$(PIP) install $(INSTALL_USER) .
 
 # Uninstall fab-cli package
 uninstall:
-	pip uninstall -y fab-cli
+	$(PIP) uninstall -y fab-cli
+
+# Build a wheel package
+wheel:
+	$(PIP) wheel .
 
 # Build a container image from the current directory
 container:
-	$(CONTAINER_TOOL) build --from $(FROM) --tag $(CONTAINER_NAME) .
+	$(CONTAINER_TOOL) build --from $(FROM) --tag $(CONTAINER_REPO):$(CONTAINER_TAG) .
 
 # Run the container image
 container-run:
-	$(CONTAINER_TOOL) run --rm -it $(CONTAINER_NAME)
+	$(CONTAINER_TOOL) run --rm -it $(CONTAINER_REPO):$(CONTAINER_TAG)
 
 # Check code for PEP8 compliance
 lint:

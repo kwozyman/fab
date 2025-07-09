@@ -1,0 +1,5 @@
+FROM scratch as ks
+COPY . /
+FROM quay.io/kwozyman/fab
+RUN --mount=type=bind,from=ks,target=/ks /usr/local/bin/fab kickstart /ks/sample.ks
+
