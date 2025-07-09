@@ -5,27 +5,26 @@ Kickstart command whitelist for security validation.
 # Whitelist of valid kickstart commands
 VALID_COMMANDS = {
     # Basic system configuration
-    "lang": "System language setting",
-    "keyboard": "Keyboard layout",
-    "timezone": "System timezone",
+    #"lang": "System language setting",
+    #"keyboard": "Keyboard layout",
+    #"timezone": "System timezone",
     "rootpw": "Root password",
     # Network configuration
-    "firewall": "Firewall settings",
+    #"firewall": "Firewall settings",
     # Package management
-    "repo": "Repository configuration",
+    #"repo": "Repository configuration",
     # User management
     "user": "User creation",
     "group": "Group creation",
     # System services
-    "services": "Service configuration",
+    #"services": "Service configuration",
     "selinux": "SELinux configuration",
     # Miscellaneous
-    "firstboot": "First boot configuration",
+    #"firstboot": "First boot configuration",
     # SSH configuration
-    "sshpw": "SSH password",
     "sshkey": "SSH key",
     # Additional valid commands for containers
-    "timesource": "Time source configuration",
+    #"timesource": "Time source configuration",
     # Section markers (valid kickstart syntax)
     "%packages": "Package selection section",
     "%end": "Section end marker",
