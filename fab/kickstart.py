@@ -5,6 +5,7 @@ Kickstart file processing functionality.
 import os
 from .os_detection import detect_os_handler
 from .whitelist import validate_kickstart_commands
+from .executor import execute_kickstart_with_pyanaconda
 
 
 def handle_kickstart(
@@ -64,38 +65,22 @@ def handle_kickstart(
             print("Dry run mode: Kickstart file is valid and ready for execution.")
             return 0
 
-        # Here you would implement the actual execution logic
-        # For now, we'll just print what we found
-        print("Kickstart file contents:")
-
-        # Safely access handler attributes
-        try:
-            lang = getattr(parser.handler.lang, "lang", "Not specified")  # type: ignore[attr-defined]
-            print(f"  Language: {lang}")
-        except AttributeError:
-            print("  Language: Not specified")
-
-        try:
-            keyboard = getattr(parser.handler.keyboard, "keyboard", "Not specified")  # type: ignore[attr-defined]
-            print(f"  Keyboard: {keyboard}")
-        except AttributeError:
-            print("  Keyboard: Not specified")
-
-        try:
-            network_count = len(parser.handler.network.network) if hasattr(
-                parser.handler.network, "network") else 0  # type: ignore[attr-defined]
-            print(f"  Network: {network_count} network(s) configured")
-        except AttributeError:
-            print("  Network: Not specified")
-
-        try:
-            package_count = len(parser.handler.packages.packageList) if hasattr(
-                parser.handler.packages, "packageList") else 0  # type: ignore[attr-defined]
-            print(f"  Packages: {package_count} packages selected")
-        except AttributeError:
-            print("  Packages: Not specified")
-
-        return 0
+        # Execute the Kickstart file using pyanaconda framework
+        print("Executing Kickstart file using pyanaconda framework...")
+        success, messages = execute_kickstart_with_pyanaconda(
+            file_path, dry_run=dry_run, ignore_unknown=ignore_unknown
+        )
+        
+        # Print execution messages
+        for message in messages:
+            print(f"  {message}")
+        
+        if success:
+            print("Kickstart execution completed successfully.")
+        else:
+            print("Kickstart execution failed.")
+            
+        return 0 if success else 1
 
     except ImportError:
         print("Error: pykickstart library is not installed.")

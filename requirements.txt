@@ -1,5 +1,6 @@
 # Core dependencies
 pykickstart>=3.0
+pyanaconda>=40.0
  
 # Development dependencies
 pytest>=6.0

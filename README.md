@@ -28,6 +28,12 @@ make install
 pip install fab-cli
 ```
 
+### Dependencies
+
+FAB requires the following dependencies:
+- `pykickstart>=3.0` - For Kickstart file parsing and validation
+- `pyanaconda>=40.0` - For executing Kickstart commands (system integration)
+
 ## Usage
 
 ### Basic Commands
@@ -49,6 +55,8 @@ fab kickstart file.ks
 fab kickstart file.ks --dry-run
 fab kickstart file.ks --ignore-unknown
 ```
+
+**Note**: The `--dry-run` option is recommended for testing, as it simulates execution without making system changes.
 
 ### Examples
 
@@ -125,6 +133,7 @@ fab/
 │   ├── config.py          # Configuration and version
 │   ├── os_detection.py    # OS detection and handler selection
 │   ├── kickstart.py       # Kickstart processing
+│   ├── executor.py        # Command execution framework (pyanaconda)
 │   └── whitelist.py       # Command validation
 ├── samples/                # Sample Kickstart files
 │   ├── sample.ks          # Basic sample
@@ -137,6 +146,7 @@ fab/
 ├── README.md              # This file
 ├── requirements.txt       # Dependencies
 └── tests/                 # Test files
+    └── test_executor.py   # Tests for executor framework
 ```
 
 ## Contributing
