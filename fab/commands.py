@@ -24,6 +24,10 @@ class KickstartCommandExecutor:
         except AttributeError:
             print(f"Command '{self.command_name}' not found in executor")
 
+    def _print_command_obj(self):
+        for attr in dir(self.command_obj):
+            print(f'{attr}: {getattr(self.command_obj, attr)}')
+    
     def _check_root(self):
         if os.geteuid() != 0:
             raise KickstartRootError(f"Must be root")
@@ -90,7 +94,7 @@ class KickstartCommandExecutor:
         if gid is not None:
             command_parts += ['--gid', str(gid)]
         if groups is not None and len(groups) > 0:
-            command_parts += ['--groups', str(groups)]
+            command_parts += ['--groups', ','.join(groups)]
         command_parts.append(str(name))
         command_string = ' '.join(command_parts)
 

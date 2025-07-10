@@ -8,7 +8,7 @@ import logging
 from .os_detection import detect_os_handler
 from .commands import KickstartCommandExecutor
 
-# Whitelist of valid kickstart commands
+# Whitelist of valid kickstart commands in execution order
 VALID_COMMANDS = {
     # Basic system configuration
     #"lang": "System language setting",
@@ -20,8 +20,8 @@ VALID_COMMANDS = {
     # Package management
     #"repo": "Repository configuration",
     # User management
-    "user": "User creation",
     "group": "Group creation",
+    "user": "User creation",
     # System services
     #"services": "Service configuration",
     #"selinux": "SELinux configuration",
@@ -170,6 +170,14 @@ class FabKickstart:
 
             # Command execution
             print("Executing Kickstart file...")
+            
+            commands = []
+            for command in VALID_COMMANDS:
+                if hasattr(self.handler, command):
+                    commands.append(getattr(self.handler, command))
+
+            print(commands)
+
             for command in VALID_COMMANDS:
                 if hasattr(self.handler, command):
                     command_obj = getattr(self.handler, command)
