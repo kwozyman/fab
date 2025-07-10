@@ -1,0 +1,7 @@
+---
+metadata:
+  name: cloud-init-enable
+  description: |
+    Enable cloud-init
+containerfile: enable.Containerfile
+

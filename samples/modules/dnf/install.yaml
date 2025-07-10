@@ -1,0 +1,8 @@
+---
+metadata:
+  name: dnf-install
+  description: |
+    Install a list of packages via dnf
+containerfile: install.Containerfile
+buildargs:
+  - RPMS

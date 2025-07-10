@@ -1,0 +1,6 @@
+---
+metadata:
+  name: dnf-autoremove
+  description: |
+    autoremove dnf
+containerfile: autoremove.Containerfile

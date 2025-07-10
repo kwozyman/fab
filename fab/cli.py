@@ -7,6 +7,7 @@ import argparse
 import sys
 from .config import __version__, APP_DESCRIPTION
 from .kickstart import FabKickstart
+from .fabfile import FabFile
 
 
 def main() -> int:
@@ -27,6 +28,7 @@ Examples:
     parser.add_argument("--version", action="version", version=f"fab {__version__}")
 
     subparsers = parser.add_subparsers(dest="command", help="Available commands")
+
 
     # Version command
     version_parser = subparsers.add_parser("version", help="Show version information")
@@ -54,6 +56,12 @@ Examples:
         help="Continue execution even if unknown commands are present (print warnings only)",
     )
 
+    # Build command
+    build_parser = subparsers.add_parser("build", help="Build a container using a fabfile")
+    build_parser.add_argument("fabfile", help="Path to the fabfile")
+    build_parser.add_argument("--container-tool", help="Path to the container tool", default="/usr/bin/podman")
+    build_parser.add_argument("--container-tool-extra-args", help="Extra arguments for the container tool", default="")
+
     args = parser.parse_args()
 
     if not args.command:
@@ -75,6 +83,11 @@ Examples:
             return 0
         ks = FabKickstart(args.file, args.dry_run, args.ignore_unknown)
         return ks.handle_kickstart()
+
+    elif args.command == "build":
+        fab = FabFile(args.fabfile, args.container_tool, args.container_tool_extra_args)
+        if not fab.build():
+            return 1
 
     return 0
 

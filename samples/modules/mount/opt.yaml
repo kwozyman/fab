@@ -1,0 +1,6 @@
+---
+metadata:
+  name: opt
+  description: |
+    make /opt writable by enabling an state overlay on top of it
+containerfile: opt.Containerfile
