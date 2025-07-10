@@ -45,3 +45,59 @@ class KickstartCommandExecutor:
         if result.returncode != 0:
             raise KickstartError(f"Failed to create group {name}: {result.stderr}")
 
+        return True
+
+    def execute_user(self):
+        # check if the user is root
+        self._check_root()
+        
+        # get the name, password, and group attributes from the command_obj
+        name = getattr(self.command_obj, 'name', None)
+        homedir = getattr(self.command_obj, 'homedir', None)
+        iscrypted = getattr(self.command_obj, 'isCrypted', None)
+        password = getattr(self.command_obj, 'password', None)
+        shell = getattr(self.command_obj, 'shell', None)
+        uid = getattr(self.command_obj, 'uid', None)
+        lock = getattr(self.command_obj, 'lock', None)
+        gecos = getattr(self.command_obj, 'gecos', None)
+        gid = getattr(self.command_obj, 'gid', None)
+        groups = getattr(self.command_obj, 'groups', None)
+
+        print(f'Creating user {name}')
+        # create the user with the given attributes
+        # construct the command string and do not include parameters that are None
+
+        # Build the useradd command, only including options if their values are not None
+        command_parts = ['useradd']
+        if homedir is not None and homedir != '':
+            command_parts += ['--home-dir', str(homedir)]
+        if password is not None:
+            if not iscrypted:
+                # generate an encrypted password usable by useradd using mkpasswd 
+                encrypted_password = subprocess.run(f'mkpasswd -m SHA-512 {password}', shell=True, capture_output=True).stdout.decode('utf-8').strip()
+                command_parts += ['--password', encrypted_password]
+            else:
+                command_parts += ['--password', str(password)]
+        if shell is not None and shell != '':
+            command_parts += ['--shell', str(shell)]
+        if uid is not None:
+            command_parts += ['--uid', str(uid)]
+        if lock is not None and lock:
+            #TODO: handle locked account
+            pass
+        if gecos is not None and gecos != '':
+            command_parts += ['--comment', str(gecos)]
+        if gid is not None:
+            command_parts += ['--gid', str(gid)]
+        if groups is not None and len(groups) > 0:
+            command_parts += ['--groups', str(groups)]
+        command_parts.append(str(name))
+        command_string = ' '.join(command_parts)
+
+        print(f'Executing command: {command_string}')
+
+        result = subprocess.run(command_string, shell=True, capture_output=True)
+        if result.returncode != 0:
+            raise KickstartError(f"Failed to create user {name}: {result.stderr}")
+
+        return True
