@@ -6,7 +6,7 @@ Command-line interface for FAB.
 import argparse
 import sys
 from .config import __version__, APP_DESCRIPTION
-from .kickstart import handle_kickstart
+from .kickstart import FabKickstart
 
 
 def main() -> int:
@@ -21,8 +21,7 @@ Examples:
   fab version --show-commands   Show version and valid commands
   fab kickstart file.ks         Execute a Kickstart file
   fab kickstart file.ks --dry-run  Validate a Kickstart file
-
-        """,
+""",
     )
 
     parser.add_argument("--version", action="version", version=f"fab {__version__}")
@@ -64,10 +63,9 @@ Examples:
     if args.command == "version":
         print(f"fab version {__version__}")
         if hasattr(args, 'show_commands') and args.show_commands:
-            from .whitelist import get_valid_commands
-            valid_commands = get_valid_commands()
-            print(f"\nValid kickstart commands ({len(valid_commands)}):")
-            for command, description in sorted(valid_commands.items()):
+            from .kickstart import VALID_COMMANDS
+            print(f"\nValid kickstart commands for fab({len(VALID_COMMANDS)}):")
+            for command, description in sorted(VALID_COMMANDS.items()):
                 print(f"  {command:<15} - {description}")
         return 0
 
@@ -75,7 +73,8 @@ Examples:
         if not args.file:
             kickstart_parser.print_help()
             return 0
-        return handle_kickstart(args.file, args.dry_run, args.ignore_unknown)
+        ks = FabKickstart(args.file, args.dry_run, args.ignore_unknown)
+        return ks.handle_kickstart()
 
     return 0
 
