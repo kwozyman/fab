@@ -33,7 +33,7 @@ setup(
     python_requires=">=3.8",
     install_requires=[
         "pykickstart>=3.0",
-        #"anaconda>=40.0",  ## Anaconda is not distributed via PyPI
+        # "anaconda>=40.0",  ## Anaconda is not distributed via PyPI
     ],
     extras_require={
         "dev": [

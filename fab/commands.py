@@ -5,13 +5,16 @@ Kickstart command execution functionality.
 import subprocess
 import os
 
+
 class KickstartRootError(Exception):
     """Exception raised when a command requires root privileges."""
     pass
 
+
 class KickstartError(Exception):
     """Exception raised when a command fails."""
     pass
+
 
 class KickstartCommandExecutor:
     def __init__(self, command_name: str, command_obj: object):
@@ -27,10 +30,10 @@ class KickstartCommandExecutor:
     def _print_command_obj(self):
         for attr in dir(self.command_obj):
             print(f'{attr}: {getattr(self.command_obj, attr)}')
-    
+
     def _check_root(self):
         if os.geteuid() != 0:
-            raise KickstartRootError(f"Must be root")
+            raise KickstartRootError("Must be root")
 
     def execute_group(self):
         # check if the user is root
@@ -54,7 +57,7 @@ class KickstartCommandExecutor:
     def execute_user(self):
         # check if the user is root
         self._check_root()
-        
+
         # get the name, password, and group attributes from the command_obj
         name = getattr(self.command_obj, 'name', None)
         homedir = getattr(self.command_obj, 'homedir', None)
@@ -77,8 +80,9 @@ class KickstartCommandExecutor:
             command_parts += ['--home-dir', str(homedir)]
         if password is not None:
             if not iscrypted:
-                # generate an encrypted password usable by useradd using mkpasswd 
-                encrypted_password = subprocess.run(f'mkpasswd -m SHA-512 {password}', shell=True, capture_output=True).stdout.decode('utf-8').strip()
+                # generate an encrypted password usable by useradd using mkpasswd
+                encrypted_password = subprocess.run(
+                    f'mkpasswd -m SHA-512 {password}', shell=True, capture_output=True).stdout.decode('utf-8').strip()
                 command_parts += ['--password', encrypted_password]
             else:
                 command_parts += ['--password', str(password)]
@@ -87,7 +91,7 @@ class KickstartCommandExecutor:
         if uid is not None:
             command_parts += ['--uid', str(uid)]
         if lock is not None and lock:
-            #TODO: handle locked account
+            # TODO: handle locked account
             pass
         if gecos is not None and gecos != '':
             command_parts += ['--comment', str(gecos)]

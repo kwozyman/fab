@@ -29,7 +29,6 @@ Examples:
 
     subparsers = parser.add_subparsers(dest="command", help="Available commands")
 
-
     # Version command
     version_parser = subparsers.add_parser("version", help="Show version information")
     version_parser.add_argument(

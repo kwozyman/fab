@@ -11,26 +11,26 @@ from .commands import KickstartCommandExecutor
 # Whitelist of valid kickstart commands in execution order
 VALID_COMMANDS = {
     # Basic system configuration
-    #"lang": "System language setting",
-    #"keyboard": "Keyboard layout",
-    #"timezone": "System timezone",
-    #"rootpw": "Root password",
+    # "lang": "System language setting",
+    # "keyboard": "Keyboard layout",
+    # "timezone": "System timezone",
+    # "rootpw": "Root password",
     # Network configuration
-    #"firewall": "Firewall settings",
+    # "firewall": "Firewall settings",
     # Package management
-    #"repo": "Repository configuration",
+    # "repo": "Repository configuration",
     # User management
     "group": "Group creation",
     "user": "User creation",
     # System services
-    #"services": "Service configuration",
-    #"selinux": "SELinux configuration",
+    # "services": "Service configuration",
+    # "selinux": "SELinux configuration",
     # Miscellaneous
-    #"firstboot": "First boot configuration",
+    # "firstboot": "First boot configuration",
     # SSH configuration
-    #"sshkey": "SSH key",
+    # "sshkey": "SSH key",
     # Additional valid commands for containers
-    #"timesource": "Time source configuration",
+    # "timesource": "Time source configuration",
     # Section markers (valid kickstart syntax)
     "%packages": "Package selection section",
     "%end": "Section end marker",
@@ -41,9 +41,9 @@ VALID_COMMANDS = {
 
 class FabKickstart:
     def __init__(self,
-                file_path: str,
-                dry_run: bool = False,
-                ignore_unknown: bool = False):
+                 file_path: str,
+                 dry_run: bool = False,
+                 ignore_unknown: bool = False):
         """
         Initialize the Kickstart executor.
 
@@ -52,13 +52,12 @@ class FabKickstart:
             ignore_unknown: If True, continue even if unknown commands are present
         """
         self.file_path = file_path
-        #self.handler = handler
-        #self.parser = parser
+        # self.handler = handler
+        # self.parser = parser
         self.dry_run = dry_run
         self.ignore_unknown = ignore_unknown
         self.logger = logging.getLogger(__name__)
         self.execution_results = []
-   
 
     def execute(self):
         """
@@ -113,7 +112,6 @@ class FabKickstart:
 
         return len(violations) == 0, violations
 
-    
     def handle_kickstart(self) -> int:
         """Handle kickstart command execution.
         Returns:
@@ -170,7 +168,7 @@ class FabKickstart:
 
             # Command execution
             print("Executing Kickstart file...")
-            
+
             commands = []
             for command in VALID_COMMANDS:
                 if hasattr(self.handler, command):
