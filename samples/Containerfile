@@ -1,5 +1,5 @@
-FROM scratch as ks
+FROM quay.io/kwozyman/fab:latest as fab
 COPY . /
-FROM quay.io/kwozyman/fab
-RUN --mount=type=bind,from=ks,target=/ks /usr/local/bin/fab kickstart /ks/sample.ks
+FROM registry.fedoraproject.org/fedora-bootc:latest
+RUN --mount=type=bind,from=fab,target=/ks /ks/fab kickstart /ks/sample.ks
 
