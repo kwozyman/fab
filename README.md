@@ -115,7 +115,7 @@ FAB's Kickstart support allows you to:
 
 ### Features
 
-FAB can parse and execute Kickstart files using the pyanaconda framework. It supports:
+FAB can parse and execute Kickstart files using the pykickstart framework. It supports:
 
 - **Validation**: Parse and validate Kickstart syntax
 - **Dry-run**: Simulate execution without making system changes
