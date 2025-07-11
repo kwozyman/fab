@@ -13,7 +13,7 @@ PIP ?= pip
 
 help:
 	@echo "Available targets:"
-	@echo "  test       Run the test suite with pytest"
+	@echo "  test       Run the test suite with pytest in a container"
 	@echo "  install    Install fab for the local user (pip install --user .)"
 	@echo "  uninstall  Uninstall fab-cli package (pip uninstall -y fab-cli)"
 	@echo "  container  Build a container image from the current directory"
@@ -26,7 +26,7 @@ help:
 
 # Run tests using pytest
 test:
-	pytest --verbosity=2
+	$(CONTAINER_TOOL) run --rm -it --entrypoint pytest $(CONTAINER_REPO):$(CONTAINER_TAG) /src/tests --verbosity=2
 
 # Install fab for the local user
 install:
