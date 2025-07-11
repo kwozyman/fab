@@ -1,13 +1,13 @@
 # FAB - Fast Assembler for BootC
 
-A command-line interface tool for configuring BootC containers via Kickstart and Containerfiles.
+A command-line interface tool for configuring [BootC](https://github.com/containers/bootc) containers via [Kickstart](https://pykickstart.readthedocs.io) and Containerfiles.
 
 ## Overview
 
 FAB (Fast Assembler for BootC) is a versatile tool that provides two main functionalities:
 
 1. **Kickstart Execution**: A tool for reading and executing Kickstart files with validation and dry-run capabilities
-2. **BootC Container Building**: A modular build pipeline for [BootC](https://github.com/containers/bootc) containers, allowing the modularization of Containerfiles and bootc image building
+2. **BootC Container Building**: A modular build pipeline for BootC containers, allowing the modularization of Containerfiles and bootc image building
 
 ## Installation
 
@@ -38,7 +38,8 @@ pip install fab-cli
 ### Dependencies
 
 FAB requires the following dependencies:
-- `pykickstart>=3.0` - For Kickstart file parsing and validation
+- `pykickstart>=3.0`
+- `pyyaml>=6.0`
 
 ## Usage
 
@@ -87,9 +88,6 @@ fab --help
 fab version
 fab version --show-commands  # Also show valid commands
 
-# Build a BootC container
-fab build samples/Fabfile.example
-
 # Execute a Kickstart file
 fab kickstart samples/sample.ks
 
@@ -99,8 +97,8 @@ fab kickstart samples/sample.ks --dry-run
 # Continue execution even with unknown commands (warnings only)
 fab kickstart samples/sample.ks --ignore-unknown
 
-# Debug container build with verbose logging
-fab --log-level debug build samples/Fabfile.example --container-tool-extra-args="--log-level debug"
+# Build a BootC container
+fab build samples/Fabfile.example
 ```
 
 ## Kickstart File Execution
@@ -111,17 +109,15 @@ FAB's Kickstart support allows you to:
 
 - **Declarative execution**: Execute Kickstart commands inside `RUN` invocations in Dockerfiles
 - **Preserve existing investments**: Move Kickstart configurations without complete rewrites
-- **Gradual migration**: Test and validate Kickstart commands before containerization
 
 ### Features
 
 FAB can parse and execute Kickstart files using the pykickstart framework. It supports:
 
+- **Declarative execution**: Execute commands inside container `RUN` statements
 - **Validation**: Parse and validate Kickstart syntax
 - **Dry-run**: Simulate execution without making system changes
-- **Command filtering**: Whitelist of allowed commands
 - **Error handling**: Graceful handling of unknown commands
-- **Declarative execution**: Execute commands inside container `RUN` statements
 
 ### Integration with Container Builds
 
@@ -138,6 +134,16 @@ The `samples/` directory contains several example Kickstart files for testing an
 - `test_ignored.ks` - Test file with ignored commands (migration scenarios)
 - `test_script.ks` - Test file with script sections (complex deployment scenarios)
 
+### Example of applying a Kickstart to a BootC container build
+
+```Dockerfile
+FROM quay.io/kwozyman/fab:latest as fab
+COPY ./example.ks /
+FROM registry.fedoraproject.org/fedora-bootc:latest
+RUN --mount=type=bind,from=fab,target=/ks /ks/fab kickstart /ks/example.ks
+```
+
+This would run and apply `example.ks` to a BootC Containerfile. Notice the usage of a second container image (`quay.io/kwozyman/fab:latest`) to keep `fab`'s environment separated from the resulting image.
 
 ## BootC Container Building
 
