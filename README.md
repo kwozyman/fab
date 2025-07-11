@@ -280,7 +280,6 @@ fab/
 ├── requirements.txt       # Dependencies
 └── tests/                 # Test files
     ├── __init__.py
-    ├── test_executor.py   # Tests for executor framework
     └── test_fab.py        # Tests for fab functionality
 ```
 

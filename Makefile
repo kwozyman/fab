@@ -30,7 +30,6 @@ test:
 
 # Install fab for the local user
 install:
-	python -c "import importlib.util; import sys; sys.exit(0 if importlib.util.find_spec('pyanaconda') else 1)" || echo "Error: pyanaconda is not installed"
 	$(PIP) install $(INSTALL_USER) .
 
 # Uninstall fab-cli package
