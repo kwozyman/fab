@@ -145,6 +145,13 @@ RUN --mount=type=bind,from=fab,target=/ks /ks/fab kickstart /ks/example.ks
 
 This would run and apply `example.ks` to a BootC Containerfile. Notice the usage of a second container image (`quay.io/kwozyman/fab:latest`) to keep `fab`'s environment separated from the resulting image.
 
+### Currently implemented Kickstart commands
+
+Currently, these are the only implemented Kickstart commands:
+
+- `group`
+- `user`
+
 ## BootC Container Building
 
 ### Fabfiles
